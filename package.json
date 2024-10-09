@@ -2,9 +2,9 @@
   "name": "rsa-tool",
   "version": "1.0.0",
   "description": "RSA encryption/decryption CLI tool",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "bin": {
-    "rsa-tool": "./dist/src/index.js"
+    "rsa-tool": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

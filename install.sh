@@ -33,8 +33,6 @@ npm pkg set bin.rsa-tool="./dist/index.js"
 npm pkg set scripts.build="tsc"
 npm pkg set scripts.start="node dist/index.js"
 
-sed -i '1s/^/#!\/usr\/bin\/env node\n/' src/index.ts
-
 npm run build
 
 chmod +x dist/index.js

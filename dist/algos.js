@@ -27,21 +27,33 @@ exports.encryptFile = encryptFile;
 exports.decryptFile = decryptFile;
 const forge = __importStar(require("node-forge"));
 const fs = __importStar(require("fs"));
+const MAX_RSA_ENCRYPT_SIZE = 214;
 function encryptFile(inputFile, outputFile, publicKeyFile = 'publicKey.pem') {
     const publicPem = fs.readFileSync(publicKeyFile, 'utf8');
     const publicKey = forge.pki.publicKeyFromPem(publicPem);
-    const fileContent = fs.readFileSync(inputFile, 'utf8');
-    const encrypted = publicKey.encrypt(fileContent, 'RSA-OAEP');
-    const encoded = forge.util.encode64(encrypted);
-    fs.writeFileSync(outputFile, encoded);
+    const fileContent = fs.readFileSync(inputFile);
+    const contentString = fileContent.toString();
+    const encryptedChunks = [];
+    for (let i = 0; i < contentString.length; i += MAX_RSA_ENCRYPT_SIZE) {
+        const chunk = contentString.substring(i, i + MAX_RSA_ENCRYPT_SIZE);
+        const encryptedChunk = publicKey.encrypt(chunk, 'RSA-OAEP');
+        const encodedChunk = forge.util.encode64(encryptedChunk);
+        encryptedChunks.push(encodedChunk);
+    }
+    fs.writeFileSync(outputFile, encryptedChunks.join('\n'));
     console.log(`File encrypted and written to ${outputFile}`);
 }
 function decryptFile(inputFile, outputFile, privateKeyFile = 'privateKey.pem') {
     const privatePem = fs.readFileSync(privateKeyFile, 'utf8');
     const privateKey = forge.pki.privateKeyFromPem(privatePem);
     const encodedContent = fs.readFileSync(inputFile, 'utf8');
-    const decodedContent = forge.util.decode64(encodedContent);
-    const decrypted = privateKey.decrypt(decodedContent, 'RSA-OAEP');
-    fs.writeFileSync(outputFile, decrypted);
+    const encodedChunks = encodedContent.split('\n');
+    let decryptedContent = '';
+    for (const encodedChunk of encodedChunks) {
+        const decodedChunk = forge.util.decode64(encodedChunk);
+        const decryptedChunk = privateKey.decrypt(decodedChunk, 'RSA-OAEP');
+        decryptedContent += decryptedChunk;
+    }
+    fs.writeFileSync(outputFile, decryptedContent);
     console.log(`File decrypted and written to ${outputFile}`);
 }

@@ -63,7 +63,7 @@ function main() {
       console.log("  rsa-tool --encrypt <inputFile> [outputFile]");
       console.log("  rsa-tool --decrypt <inputFile> [outputFile]");
       console.log("  rsa-tool --sign <inputFile> <signatureFile>");
-      console.log("  rsa-tool --verifySign <inputFile> <signatureFile>");
+      console.log("  rsa-tool --verify <inputFile> <signatureFile>");
       break;
   }
 }

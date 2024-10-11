@@ -2,9 +2,6 @@
 
 set -e
 
-git clone https://github.com/AnirudhRevanur/rsa-tool.git
-cd rsa-tool
-
 npm install
 
 mkdir -p src

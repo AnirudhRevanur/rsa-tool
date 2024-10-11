@@ -1,6 +1,5 @@
 import * as forge from 'node-forge'
 import * as fs from 'fs'
-import * as path from 'path'
 
 export function encryptFile(inputFile: string, outputFile: string, publicKeyFile = 'publicKey.pem') {
   const publicPem = fs.readFileSync(publicKeyFile, 'utf8')

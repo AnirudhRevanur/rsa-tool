@@ -3,7 +3,6 @@
 import { generateKeyPair } from "./genKeyPair";
 import { encryptFile, decryptFile } from "./algos";
 import { signFile, verifySignature } from "./sign";
-import { encryptFileWithAes, decryptDataWithAES } from "./realAlgos";
 
 function main() {
   const args = process.argv.slice(2);

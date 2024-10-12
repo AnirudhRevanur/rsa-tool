@@ -5,8 +5,8 @@ import { encryptFile, decryptFile } from "./algos";
 import { signFile, verifySignature } from "./sign";
 
 function main() {
-  const args = process.argv.slice(2);
-  const command = args[0];
+  const args: string[] = process.argv.slice(2);
+  const command: string = args[0];
 
   switch (command) {
     case '--generate':
@@ -14,8 +14,8 @@ function main() {
       break;
 
     case '--encrypt':
-      const inputFileEncrypt = args[1];
-      const outputFileEncrypt = args[2] || `${inputFileEncrypt}.enc`;
+      const inputFileEncrypt: string = args[1];
+      const outputFileEncrypt: string = args[2] || `${inputFileEncrypt}.enc`;
 
       if (!inputFileEncrypt) {
         console.log("Usage: rsa-tool --encrypt <inputFile> [outputFile]");
@@ -25,8 +25,8 @@ function main() {
       break;
 
     case '--decrypt':
-      const inputFileDecrypt = args[1];
-      const outputFileDecrypt = args[2] || `${inputFileDecrypt}.dec`;
+      const inputFileDecrypt: string = args[1];
+      const outputFileDecrypt: string = args[2] || `${inputFileDecrypt}.dec`;
 
       if (!inputFileDecrypt) {
         console.log("Usage: rsa-tool --decrypt <inputFile> [outputFile]");
@@ -36,8 +36,8 @@ function main() {
       break;
 
     case '--sign':
-      const inputFileSign = args[1];
-      const signatureFile = args[2];
+      const inputFileSign: string = args[1];
+      const signatureFile: string = args[2];
 
       if (!inputFileSign || !signatureFile) {
         console.log("Usage: rsa-tool --sign <inputFile> <signatureFile>")
@@ -46,8 +46,8 @@ function main() {
       break;
 
     case '--verify':
-      const inputFileVerification = args[1];
-      const signatureFileVerification = args[2];
+      const inputFileVerification: string = args[1];
+      const signatureFileVerification: string = args[2];
 
       if (!inputFileVerification || !signatureFileVerification) {
         console.log("Usage: rsa-tool --verify <inputFile> <signatureFile>")

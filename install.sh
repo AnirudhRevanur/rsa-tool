@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Someone's curious about the install script. Am proud :)
+
 set -e
 
 npm install
@@ -34,8 +36,8 @@ npm run build
 
 chmod +x dist/index.js
 
-npm unlink -g rsa-tool 2>/dev/null || true
+sudo npm unlink -g rsa-tool 2>/dev/null || true
 
-npm link
+sudo npm link
 
 echo "RSA Tool has been set up successfully. You can now use 'rsa-tool' command."

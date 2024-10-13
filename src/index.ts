@@ -10,29 +10,35 @@ function main() {
 
   switch (command) {
     case '--generate':
-      generateKeyPair();
+      const privateKeyFile: string = args[1];
+      const publicKeyFile: string = args[2];
+      if (!privateKeyFile || !publicKeyFile) {
+        console.log("Usage: rsa-tool --generate <privateKeyFile> <publicKeyFile>")
+        return
+      }
+      generateKeyPair(privateKeyFile, publicKeyFile);
       break;
 
     case '--encrypt':
       const inputFileEncrypt: string = args[1];
-      const outputFileEncrypt: string = args[2] || `${inputFileEncrypt}.enc`;
-
-      if (!inputFileEncrypt) {
-        console.log("Usage: rsa-tool --encrypt <inputFile> [outputFile]");
+      const outputFileEncrypt: string = args[2];
+      const publicKey: string = args[3]
+      if (!inputFileEncrypt || !outputFileEncrypt || !publicKey) {
+        console.log("Usage: rsa-tool --encrypt <inputFile> <outputFile> <publicKeyFile>");
         return;
       }
-      encryptFile(inputFileEncrypt, outputFileEncrypt);
+      encryptFile(inputFileEncrypt, outputFileEncrypt, publicKey);
       break;
 
     case '--decrypt':
       const inputFileDecrypt: string = args[1];
-      const outputFileDecrypt: string = args[2] || `${inputFileDecrypt}.dec`;
-
-      if (!inputFileDecrypt) {
-        console.log("Usage: rsa-tool --decrypt <inputFile> [outputFile]");
+      const outputFileDecrypt: string = args[2];
+      const privateKey: string = args[3]
+      if (!inputFileDecrypt || !outputFileDecrypt || !privateKey) {
+        console.log("Usage: rsa-tool --decrypt <inputFile> <outputFile> <privateKeyFile>");
         return;
       }
-      decryptFile(inputFileDecrypt, outputFileDecrypt);
+      decryptFile(inputFileDecrypt, outputFileDecrypt, privateKey);
       break;
 
     case '--sign':
@@ -58,9 +64,9 @@ function main() {
 
     default:
       console.log("Usage:");
-      console.log("  rsa-tool --generate");
-      console.log("  rsa-tool --encrypt <inputFile> [outputFile]");
-      console.log("  rsa-tool --decrypt <inputFile> [outputFile]");
+      console.log("  rsa-tool --generate <privateKeyFile> <publicKeyFile>");
+      console.log("  rsa-tool --encrypt <inputFile> <outputFile> <publicKey>");
+      console.log("  rsa-tool --decrypt <inputFile> <outputFile> <privateKey>");
       console.log("  rsa-tool --sign <inputFile> <signatureFile>");
       console.log("  rsa-tool --verify <inputFile> <signatureFile>");
       break;
